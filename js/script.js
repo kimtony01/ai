@@ -131,14 +131,18 @@ function matches(s) {
   return true;
 }
 
-// 내 앱은 같은 서비스가 분야별로 여러 번 나오지 않게 하나만
-function myServiceList() {
+// 같은 서비스가 분야별로 여러 번 나오지 않게 하나만
+function uniqueByName(list) {
   const seen = new Set();
-  return services.filter((s) => {
-    if (!myApps.has(s.name) || seen.has(s.name)) return false;
+  return list.filter((s) => {
+    if (seen.has(s.name)) return false;
     seen.add(s.name);
     return true;
   });
+}
+
+function myServiceList() {
+  return uniqueByName(services.filter((s) => myApps.has(s.name)));
 }
 
 function renderStats() {
@@ -152,7 +156,7 @@ function renderStats() {
 
 function renderChips() {
   const source = state.view === "my" ? myServiceList() : services;
-  const counts = { "전체": source.length };
+  const counts = { "전체": uniqueByName(source).length };
   source.forEach((s) => { counts[s.category] = (counts[s.category] || 0) + 1; });
 
   chips.innerHTML = Object.keys(counts).map((cat) => `
@@ -189,7 +193,8 @@ function cardHtml(s, i) {
 
 function renderGrid() {
   const isMy = state.view === "my";
-  const list = (isMy ? myServiceList() : services).filter(matches);
+  let list = (isMy ? myServiceList() : services).filter(matches);
+  if (state.category === "전체") list = uniqueByName(list);
   const noSaved = isMy && myApps.size === 0;
 
   grid.innerHTML = list.map(cardHtml).join("");

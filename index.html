@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 서비스 도감</title>
+  <meta name="description" content="분야별로 정리한 AI 서비스 모음 — 장점, 단점, 추천 용도, 요금까지 한눈에">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="hero-tag">AI SERVICE GUIDE · 2026</p>
+      <h1>지금 쓸 만한 <span class="hl">AI 서비스</span>,<br>분야별로 한눈에</h1>
+      <p class="hero-sub">조원 4명이 직접 조사한 AI 서비스를 장점·단점·추천 용도·요금까지 정리했어요.<br class="pc">카드를 누르면 서비스 사이트로 바로 이동합니다.</p>
+      <ul class="stats">
+        <li><strong id="statTotal">0</strong><span>서비스</span></li>
+        <li><strong id="statCats">0</strong><span>분야</span></li>
+        <li><strong id="statFree">0</strong><span>무료로 시작 가능</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="wrap">
+      <nav class="tabs" id="tabs" aria-label="보기 전환">
+        <button type="button" data-view="all" class="active">📚 전체 서비스</button>
+        <button type="button" data-view="my">⭐ 내 앱 <span class="tab-count" id="myCount">0</span></button>
+        <button type="button" data-view="combos">🧩 프로젝트별 추천 조합</button>
+      </nav>
+      <div class="filters" id="filters">
+      <div class="toolbar-top">
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="search" type="search" placeholder="서비스 이름이나 설명으로 검색" autocomplete="off">
+        </label>
+        <div class="price-filter" id="priceFilter" role="group" aria-label="요금 필터">
+          <button type="button" data-price="all" class="active">전체 요금</button>
+          <button type="button" data-price="free">무료</button>
+          <button type="button" data-price="mixed">무료+유료</button>
+          <button type="button" data-price="paid">유료</button>
+        </div>
+      </div>
+      <nav class="chips" id="chips" aria-label="분야 필터"></nav>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="result-bar">
+      <p class="result" id="result"></p>
+      <button type="button" class="clear-my" id="clearMy" hidden>내 앱 모두 비우기</button>
+    </div>
+    <section class="grid" id="grid"></section>
+    <div class="empty" id="empty" hidden>
+      <p>조건에 맞는 서비스가 없어요.</p>
+      <button type="button" id="reset">필터 초기화</button>
+    </div>
+    <div class="empty" id="emptyMy" hidden>
+      <p class="empty-icon">☆</p>
+      <p>아직 담은 앱이 없어요.<br>카드 오른쪽 위의 <b>☆</b>를 누르거나, 추천 조합을 통째로 담아 보세요.</p>
+      <button type="button" data-goto="all">서비스 둘러보기</button>
+      <button type="button" data-goto="combos" class="ghost">추천 조합 보기</button>
+    </div>
+    <section id="combosView" hidden>
+      <div class="combos-intro">
+        <h2>무슨 프로젝트를 하나요?</h2>
+        <p>프로젝트에 맞는 앱 조합을 순서대로 골라 봤어요. 예산에 맞춰 <b>완전 무료 · 일부 유료 · 플렉스 모드</b>로 바꿔 볼 수 있어요. <b>💡 예시 보기</b>를 누르면 실제로 어떻게 쓰는지 단계별 프롬프트와 함께 볼 수 있고, <b>조합 통째로 담기</b>를 누르면 ⭐ 내 앱에 저장돼요.</p>
+      </div>
+      <div class="mode-bar" id="modeBar" role="tablist" aria-label="요금 모드"></div>
+      <div class="mode-info" id="modeInfo"></div>
+      <div class="combos" id="combos"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>※ 월 가격은 2026.10.07 공식 요금 페이지 기준이며, 별도 표기가 없으면 월 결제 USD입니다. 요금은 바뀔 수 있으니 공식 페이지에서 한 번 더 확인하세요.</p>
+      <p>※ 같은 서비스라도 분야별 평가가 달라 분야마다 따로 표기했습니다.</p>
+    </div>
+  </footer>
+
+  <dialog class="modal" id="modal">
+    <div class="modal-inner" id="modalBody"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/services.js"></script>
+  <script src="js/combos.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
